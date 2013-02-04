@@ -18,12 +18,12 @@ import edu.wpi.first.wpilibj.SimpleRobot;
  * creating this project, you must also update the manifest file in the resource
  * directory.
  */
-public class RobotTemplate extends SimpleRobot {
+public class RobotWizards extends SimpleRobot {
     
     private final WizardArmController armController;
     private final RobotDrive robotDrive;
 
-    public RobotTemplate() {
+    public RobotWizards() {
         this.armController = new WizardArmController(RobotMap.RAISE_ARM_RELAY);
         this.robotDrive = new RobotDrive(RobotMap.MOTOR_ONE, RobotMap.MOTOR_TWO);
     }
