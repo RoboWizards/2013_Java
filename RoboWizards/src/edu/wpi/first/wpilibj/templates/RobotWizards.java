@@ -25,7 +25,7 @@ public class RobotWizards extends SimpleRobot {
 
     public RobotWizards() {
         this.armController = new WizardArmController(RobotMap.RAISE_ARM_RELAY, 
-                RobotMap.ROTATE_ARM_CONTROLLER);
+                RobotMap.ROTATE_ARM_RELAY);
         this.robotDrive = new RobotDrive(RobotMap.MOTOR_ONE, RobotMap.MOTOR_TWO);
     }
     
