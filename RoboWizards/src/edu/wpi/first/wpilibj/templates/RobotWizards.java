@@ -8,8 +8,10 @@
 package edu.wpi.first.wpilibj.templates;
 
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SimpleRobot;
+import edu.wpi.first.wpilibj.Timer;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -20,14 +22,22 @@ import edu.wpi.first.wpilibj.SimpleRobot;
  */
 public class RobotWizards extends SimpleRobot {
     
+    public static final double JOYSTICK_DEAD_ZONE = 10;
+    
     private final WizardArmController armController;
     private final RobotDrive robotDrive;
+    private final Joystick joystick1;
+    private final Joystick joystick2;
+    private final Joystick joystick3;
 
     public RobotWizards() {
         this.armController = new WizardArmController(RobotMap.RAISE_ARM_RELAY, 
                 RobotMap.ROTATE_ARM_RELAY);
         this.robotDrive = new RobotDrive(RobotMap.MOTOR_ONE, RobotMap.MOTOR_TWO);
-    }
+        joystick1 = new Joystick(1);
+        joystick2 = new Joystick(2);
+        joystick3 = new Joystick(3);
+    } 
     
     /**
      * This function is called once each time the robot enters autonomous mode.
@@ -40,7 +50,40 @@ public class RobotWizards extends SimpleRobot {
      * This function is called once each time the robot enters operator control.
      */
     public void operatorControl() {
-
+        while(isOperatorControl() && isEnabled()){
+            robotDrive.tankDrive(joystick1, joystick2);
+            checkRotateJoystick();
+            checkClimbButtons();
+            checkAutoClimbButtons();
+            
+            Timer.delay(0.01);
+        }
+    }
+    
+    private void checkRotateJoystick(){
+        if(joystick3.getY() > 0){
+            if(!(joystick3.getY() < JOYSTICK_DEAD_ZONE)){
+                armController.rotateArmsForward();
+            }
+        }
+        else{
+            if(!(joystick3.getY() > -JOYSTICK_DEAD_ZONE)){
+                armController.rotateArmsBackward();
+            }
+        }
+    }
+    
+    private void checkClimbButtons(){
+        if(joystick3.getRawButton(1)){
+            armController.raiseClimbArms();
+        }
+        else if(joystick3.getRawButton(2) || joystick3.getRawButton(3)){
+            armController.lowerClimbArms();
+        }
+    }
+    
+    private void checkAutoClimbButtons(){
+        //To-Do
     }
     
     /**
