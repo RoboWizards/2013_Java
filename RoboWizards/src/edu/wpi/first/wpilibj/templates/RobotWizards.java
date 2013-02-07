@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SimpleRobot;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.Watchdog;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -43,7 +44,12 @@ public class RobotWizards extends SimpleRobot {
      * This function is called once each time the robot enters autonomous mode.
      */
     public void autonomous() {
+        Watchdog.getInstance().setEnabled(false);
         
+        //Autonomous cod here
+        
+        Watchdog.getInstance().setEnabled(true);
+        Watchdog.getInstance().feed();
     }
 
     /**
@@ -51,6 +57,7 @@ public class RobotWizards extends SimpleRobot {
      */
     public void operatorControl() {
         while(isOperatorControl() && isEnabled()){
+            Watchdog.getInstance().feed();
             robotDrive.tankDrive(joystick1, joystick2);
             checkRotateJoystick();
             checkClimbButtons();
