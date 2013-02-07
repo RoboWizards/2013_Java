@@ -61,15 +61,14 @@ public class RobotWizards extends SimpleRobot {
     }
     
     private void checkRotateJoystick(){
-        if(joystick3.getY() > 0){
-            if(!(joystick3.getY() < JOYSTICK_DEAD_ZONE)){
-                armController.rotateArmsForward();
-            }
+        if(joystick3.getY() > JOYSTICK_DEAD_ZONE){
+            armController.rotateArmsForward();
+        }
+        else if(joystick3.getY() < -JOYSTICK_DEAD_ZONE){
+            armController.rotateArmsBackward();
         }
         else{
-            if(!(joystick3.getY() > -JOYSTICK_DEAD_ZONE)){
-                armController.rotateArmsBackward();
-            }
+            armController.stopArmRotation();
         }
     }
     
@@ -79,6 +78,9 @@ public class RobotWizards extends SimpleRobot {
         }
         else if(joystick3.getRawButton(2) || joystick3.getRawButton(3)){
             armController.lowerClimbArms();
+        }
+        else{
+            armController.stopClimbArms();
         }
     }
     

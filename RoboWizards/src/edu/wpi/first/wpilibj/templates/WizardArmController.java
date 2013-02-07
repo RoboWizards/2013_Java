@@ -22,23 +22,27 @@ public class WizardArmController {
     }
     
     public void raiseClimbArms(){
-        armLiftRelay.setDirection(Relay.Direction.kForward);
+        armLiftRelay.set(Relay.Value.kForward);
     }
     
     public void lowerClimbArms(){
-        armLiftRelay.setDirection(Relay.Direction.kReverse);
+        armLiftRelay.set(Relay.Value.kReverse);
+    }
+    
+    public void stopClimbArms(){
+        armLiftRelay.set(Relay.Value.kOff);
     }
     
     public void rotateArmsForward(){
-        armRotateRelay.setDirection(Relay.Direction.kForward);
+        armRotateRelay.set(Relay.Value.kForward);
     }
     
     public void rotateArmsBackward(){
-        armRotateRelay.setDirection(Relay.Direction.kReverse);
+        armRotateRelay.set(Relay.Value.kReverse);
     }
     
     public void stopArmRotation(){
-        armRotateRelay.setDirection(Relay.Direction.kBoth);
+        armRotateRelay.set(Relay.Value.kOff);
     }
     
 }
