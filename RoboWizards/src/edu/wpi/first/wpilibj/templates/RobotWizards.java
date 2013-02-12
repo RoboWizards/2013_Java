@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SimpleRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.Watchdog;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -24,6 +25,8 @@ import edu.wpi.first.wpilibj.Watchdog;
 public class RobotWizards extends SimpleRobot {
     
     public static final double JOYSTICK_DEAD_ZONE = 10;
+    public static final String ROTATTION_KEY = "Rotate State: ";
+    public static final String LIFTING_KEY = "Lift State: ";
     
     private final WizardArmController armController;
     private final RobotDrive robotDrive;
@@ -70,24 +73,30 @@ public class RobotWizards extends SimpleRobot {
     private void checkRotateJoystick(){
         if(joystick3.getY() > JOYSTICK_DEAD_ZONE){
             armController.rotateArmsForward();
+            SmartDashboard.putString(ROTATTION_KEY, "Forwards");
         }
         else if(joystick3.getY() < -JOYSTICK_DEAD_ZONE){
             armController.rotateArmsBackward();
+            SmartDashboard.putString(ROTATTION_KEY, "Backwards");
         }
         else{
             armController.stopArmRotation();
+            SmartDashboard.putString(ROTATTION_KEY, "Stopped");
         }
     }
     
     private void checkClimbButtons(){
         if(joystick3.getRawButton(1)){
             armController.raiseClimbArms();
+            SmartDashboard.putString(LIFTING_KEY, "Lifting");
         }
         else if(joystick3.getRawButton(2) || joystick3.getRawButton(3)){
             armController.lowerClimbArms();
+            SmartDashboard.putString(LIFTING_KEY, "Lowering");
         }
         else{
             armController.stopClimbArms();
+            SmartDashboard.putString(ROTATTION_KEY, "Stopped");
         }
     }
     
