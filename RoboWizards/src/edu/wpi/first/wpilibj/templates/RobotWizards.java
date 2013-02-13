@@ -15,13 +15,6 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.Watchdog;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-/**
- * The VM is configured to automatically run this class, and to call the
- * functions corresponding to each mode, as described in the SimpleRobot
- * documentation. If you change the name of this class or the package after
- * creating this project, you must also update the manifest file in the resource
- * directory.
- */
 public class RobotWizards extends SimpleRobot {
     
     public static final double JOYSTICK_DEAD_ZONE = 10;
@@ -43,9 +36,6 @@ public class RobotWizards extends SimpleRobot {
         joystick3 = new Joystick(3);
     } 
     
-    /**
-     * This function is called once each time the robot enters autonomous mode.
-     */
     public void autonomous() {
         Watchdog.getInstance().setEnabled(false);
         
@@ -55,9 +45,6 @@ public class RobotWizards extends SimpleRobot {
         Watchdog.getInstance().feed();
     }
 
-    /**
-     * This function is called once each time the robot enters operator control.
-     */
     public void operatorControl() {
         while(isOperatorControl() && isEnabled()){
             Watchdog.getInstance().feed();
@@ -104,9 +91,6 @@ public class RobotWizards extends SimpleRobot {
         //To-Do
     }
     
-    /**
-     * This function is called once each time the robot enters test mode.
-     */
     public void test() {
     
     }
