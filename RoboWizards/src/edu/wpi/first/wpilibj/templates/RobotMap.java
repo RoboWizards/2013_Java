@@ -11,7 +11,7 @@ package edu.wpi.first.wpilibj.templates;
 public class RobotMap {
     
     public static final int RAISE_ARM_RELAY = 1;
-    public static final int ROTATE_ARM_RELAY = 1;
+    public static final int ROTATE_ARM_RELAY = 2;
     public static final int MOTOR_ONE = 1;
     public static final int MOTOR_TWO = 2;
     

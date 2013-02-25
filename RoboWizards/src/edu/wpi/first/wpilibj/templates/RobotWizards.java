@@ -77,7 +77,8 @@ public class RobotWizards extends SimpleRobot {
             armController.raiseClimbArms();
             SmartDashboard.putString(LIFTING_KEY, "Lifting");
         }
-        else if(joystick3.getRawButton(2) || joystick3.getRawButton(3)){
+        else if(joystick3.getRawButton(UIMap.LOWER_ARM_BUTTON_ONE) 
+                || joystick3.getRawButton(UIMap.LOWER_ARM_BUTTON_TWO)){
             armController.lowerClimbArms();
             SmartDashboard.putString(LIFTING_KEY, "Lowering");
         }
