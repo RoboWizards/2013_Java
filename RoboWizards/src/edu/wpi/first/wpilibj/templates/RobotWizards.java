@@ -58,11 +58,11 @@ public class RobotWizards extends SimpleRobot {
     
     private void checkRotateJoystick(){
         if(joystick3.getY() > UIMap.JOYSTICK_DEAD_ZONE){
-            armController.rotateArmsBackward();
+            armController.rotateArmsForward();
             SmartDashboard.putString(ROTATTION_KEY, "Forwards");
         }
         else if(joystick3.getY() < UIMap.JOYSTICK_DEAD_ZONE){
-            armController.rotateArmsForward();
+            armController.rotateArmsBackward();
             SmartDashboard.putString(ROTATTION_KEY, "Backwards");
         }
         else{
