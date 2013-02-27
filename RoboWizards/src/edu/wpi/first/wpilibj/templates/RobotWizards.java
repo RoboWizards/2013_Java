@@ -46,6 +46,7 @@ public class RobotWizards extends SimpleRobot {
 
     public void operatorControl() {
         while(isOperatorControl() && isEnabled()){
+            Watchdog.getInstance().setEnabled(true);
             Watchdog.getInstance().feed();
             robotDrive.tankDrive(joystick1, joystick2);
             checkRotateJoystick();
