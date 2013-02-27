@@ -17,7 +17,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class RobotWizards extends SimpleRobot {
     
-    public static final double JOYSTICK_DEAD_ZONE = 10;
     public static final String ROTATTION_KEY = "Rotate State: ";
     public static final String LIFTING_KEY = "Lift State: ";
     
@@ -58,33 +57,33 @@ public class RobotWizards extends SimpleRobot {
     }
     
     private void checkRotateJoystick(){
-        if(joystick3.getY() > JOYSTICK_DEAD_ZONE){
-            armController.rotateArmsForward();
+        if(joystick3.getY() > UIMap.JOYSTICK_DEAD_ZONE){
+            armController.rotateArmsBackward();
             SmartDashboard.putString(ROTATTION_KEY, "Forwards");
         }
-        else if(joystick3.getY() < -JOYSTICK_DEAD_ZONE){
-            armController.rotateArmsBackward();
+        else if(joystick3.getY() < UIMap.JOYSTICK_DEAD_ZONE){
+            armController.rotateArmsForward();
             SmartDashboard.putString(ROTATTION_KEY, "Backwards");
         }
         else{
             armController.stopArmRotation();
             SmartDashboard.putString(ROTATTION_KEY, "Stopped");
         }
+        SmartDashboard.putNumber("Rotatin:", joystick3.getY());
     }
     
     private void checkClimbButtons(){
-        if(joystick3.getRawButton(1)){
-            armController.raiseClimbArms();
+        if(joystick3.getRawButton(UIMap.RAISE_ARM_BUTTON)){
+            armController.lowerClimbArms();
             SmartDashboard.putString(LIFTING_KEY, "Lifting");
         }
-        else if(joystick3.getRawButton(UIMap.LOWER_ARM_BUTTON_ONE) 
-                || joystick3.getRawButton(UIMap.LOWER_ARM_BUTTON_TWO)){
-            armController.lowerClimbArms();
+        else if(joystick3.getRawButton(UIMap.LOWER_ARM_BUTTON)){
+            armController.raiseClimbArms();
             SmartDashboard.putString(LIFTING_KEY, "Lowering");
         }
         else{
             armController.stopClimbArms();
-            SmartDashboard.putString(ROTATTION_KEY, "Stopped");
+            SmartDashboard.putString(LIFTING_KEY, "Stopped");
         }
     }
     
@@ -93,6 +92,6 @@ public class RobotWizards extends SimpleRobot {
     }
     
     public void test() {
-    
+        SmartDashboard.putNumber("Test Axis", joystick3.getY());
     }
 }
