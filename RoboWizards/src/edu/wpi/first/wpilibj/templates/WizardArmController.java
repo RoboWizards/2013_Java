@@ -4,6 +4,7 @@
  */
 package edu.wpi.first.wpilibj.templates;
 
+import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.Relay;
 
 /**
@@ -12,13 +13,14 @@ import edu.wpi.first.wpilibj.Relay;
  */
 public class WizardArmController {
     
+    private final double ROTATION_SPEED = .4;
     
     private final Relay armLiftRelay;
-    private final Relay armRotateRelay;
+    private final Jaguar armRotateController;
     
-    public WizardArmController(final int climbArmRelayChannel, final int rotateArmRelayChannel){
+    public WizardArmController(final int climbArmRelayChannel, final int rotateArmJaguarChannel){
         this.armLiftRelay = new Relay(climbArmRelayChannel);
-        this.armRotateRelay = new Relay(rotateArmRelayChannel);
+        this.armRotateController = new Jaguar(rotateArmJaguarChannel);
     }
     
     public void raiseClimbArms(){
@@ -34,15 +36,15 @@ public class WizardArmController {
     }
     
     public void rotateArmsForward(){
-        armRotateRelay.set(Relay.Value.kForward);
+        armRotateController.set(ROTATION_SPEED);
     }
     
     public void rotateArmsBackward(){
-        armRotateRelay.set(Relay.Value.kReverse);
+        armRotateController.set(-ROTATION_SPEED);
     }
     
     public void stopArmRotation(){
-        armRotateRelay.set(Relay.Value.kOff);
+        armRotateController.set(0);
     }
     
 }
