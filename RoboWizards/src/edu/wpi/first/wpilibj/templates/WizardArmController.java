@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.Relay;
  */
 public class WizardArmController {
     
-    private final double ROTATION_SPEED = .4;
+    private final double ROTATION_SPEED = .2;
     
     private final Relay armLiftRelay;
     private final Jaguar armRotateController;
