@@ -27,7 +27,7 @@ public class RobotWizards extends SimpleRobot {
     private final Joystick joystick3;
 
     public RobotWizards() {
-        this.armController = new WizardArmController(RobotMap.RAISE_ARM_RELAY, 
+        this.armController = new WizardArmController(RobotMap.RAISE_ARM_JAGUAR, 
                 RobotMap.ROTATE_ARM_JAGUAR);
         this.robotDrive = new RobotDrive(RobotMap.MOTOR_ONE, RobotMap.MOTOR_TWO);
         joystick1 = new Joystick(1);

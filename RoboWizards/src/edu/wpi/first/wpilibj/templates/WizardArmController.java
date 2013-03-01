@@ -5,8 +5,6 @@
 package edu.wpi.first.wpilibj.templates;
 
 import edu.wpi.first.wpilibj.Jaguar;
-import edu.wpi.first.wpilibj.Relay;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -15,25 +13,26 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class WizardArmController {
     
     private final double ROTATION_SPEED = .6;
+    private final double LIFT_SPEED = .5;
     
-    private final Relay armLiftRelay;
+    private final Jaguar armLiftController;
     private final Jaguar armRotateController;
     
-    public WizardArmController(final int climbArmRelayChannel, final int rotateArmJaguarChannel){
-        this.armLiftRelay = new Relay(climbArmRelayChannel);
+    public WizardArmController(final int climbArmJaguarChannel, final int rotateArmJaguarChannel){
+        this.armLiftController = new Jaguar(climbArmJaguarChannel);
         this.armRotateController = new Jaguar(rotateArmJaguarChannel);
     }
     
     public void raiseClimbArms(){
-        armLiftRelay.set(Relay.Value.kForward);
+        armLiftController.set(LIFT_SPEED);
     }
     
     public void lowerClimbArms(){
-        armLiftRelay.set(Relay.Value.kReverse);
+        armLiftController.set(-LIFT_SPEED);
     }
     
     public void stopClimbArms(){
-        armLiftRelay.set(Relay.Value.kOff);
+        armLiftController.set(0);
     }
     
     public void rotateArmsForward(){
