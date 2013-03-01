@@ -6,6 +6,7 @@ package edu.wpi.first.wpilibj.templates;
 
 import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.Relay;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -13,7 +14,7 @@ import edu.wpi.first.wpilibj.Relay;
  */
 public class WizardArmController {
     
-    private final double ROTATION_SPEED = .2;
+    private final double ROTATION_SPEED = .6;
     
     private final Relay armLiftRelay;
     private final Jaguar armRotateController;
@@ -37,10 +38,12 @@ public class WizardArmController {
     
     public void rotateArmsForward(){
         armRotateController.set(ROTATION_SPEED);
+        SmartDashboard.putString("Test", "Negative");
     }
     
     public void rotateArmsBackward(){
         armRotateController.set(-ROTATION_SPEED);
+        SmartDashboard.putString("Test", "Positive");
     }
     
     public void stopArmRotation(){
