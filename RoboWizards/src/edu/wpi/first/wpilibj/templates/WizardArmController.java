@@ -38,12 +38,10 @@ public class WizardArmController {
     
     public void rotateArmsForward(){
         armRotateController.set(ROTATION_SPEED);
-        SmartDashboard.putString("Test", "Negative");
     }
     
     public void rotateArmsBackward(){
         armRotateController.set(-ROTATION_SPEED);
-        SmartDashboard.putString("Test", "Positive");
     }
     
     public void stopArmRotation(){
