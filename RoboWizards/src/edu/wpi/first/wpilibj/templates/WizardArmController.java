@@ -44,6 +44,10 @@ public class WizardArmController {
         armRotateController.set(-ROTATION_SPEED);
     }
     
+    public void rotateArms(double speed){
+        armRotateController.set(speed);
+    }
+    
     public void stopArmRotation(){
         armRotateController.set(0);
     }

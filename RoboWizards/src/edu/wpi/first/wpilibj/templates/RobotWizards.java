@@ -8,6 +8,7 @@
 package edu.wpi.first.wpilibj.templates;
 
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SimpleRobot;
@@ -17,22 +18,27 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class RobotWizards extends SimpleRobot {
     
-    public static final String ROTATTION_KEY = "Rotate State: ";
+    public static final String ROTATION_KEY = "Rotate State: ";
     public static final String LIFTING_KEY = "Lift State: ";
+    public static final double ROTATION_CAP = 0.7;
     
     private final WizardArmController armController;
     private final RobotDrive robotDrive;
     private final Joystick joystick1;
     private final Joystick joystick2;
     private final Joystick joystick3;
+    private final DigitalInput digitalForwards;
+    private final DigitalInput digitalBackwards;
 
     public RobotWizards() {
         this.armController = new WizardArmController(RobotMap.RAISE_ARM_JAGUAR, 
                 RobotMap.ROTATE_ARM_JAGUAR);
         this.robotDrive = new RobotDrive(RobotMap.MOTOR_ONE, RobotMap.MOTOR_TWO);
-        joystick1 = new Joystick(1);
-        joystick2 = new Joystick(2);
-        joystick3 = new Joystick(3);
+        this.joystick1 = new Joystick(1);
+        this.joystick2 = new Joystick(2);
+        this.joystick3 = new Joystick(3);
+        this.digitalForwards = new DigitalInput(RobotMap.DIGITAL_INPUT_FORWARDS);
+        this.digitalBackwards = new DigitalInput(RobotMap.DIGITAL_INPUT_BACKWARDS);
     } 
     
     public void autonomous() {
@@ -48,7 +54,7 @@ public class RobotWizards extends SimpleRobot {
         while(isOperatorControl() && isEnabled()){
             Watchdog.getInstance().setEnabled(true);
             Watchdog.getInstance().feed();
-            robotDrive.tankDrive(joystick1, joystick2);
+            robotDrive.tankDrive(-joystick1.getY(), -joystick2.getY());
             checkRotateJoystick();
             checkClimbButtons();
             checkAutoClimbButtons();
@@ -58,19 +64,16 @@ public class RobotWizards extends SimpleRobot {
     }
     
     private void checkRotateJoystick(){
-        if(joystick3.getY() > UIMap.JOYSTICK_DEAD_ZONE){
-            armController.rotateArmsBackward();
-            SmartDashboard.putString(ROTATTION_KEY, "Forwards");
-        }
-        else if(joystick3.getY() < -UIMap.JOYSTICK_DEAD_ZONE){
-            armController.rotateArmsForward();
-            SmartDashboard.putString(ROTATTION_KEY, "Backwards");
+        double yAxis = joystick3.getY();
+        yAxis = limitRotation(yAxis);
+        boolean allowRotation = canRotate(yAxis);
+        if(allowRotation){
+            armController.rotateArms(yAxis * -1);
+            updateDashboardRotation(yAxis);
         }
         else{
-            armController.stopArmRotation();
-            SmartDashboard.putString(ROTATTION_KEY, "Stopped");
+            SmartDashboard.putString(ROTATION_KEY, "Stopped by digital inputs");
         }
-        SmartDashboard.putNumber("Rotatin:", joystick3.getY());
     }
     
     private void checkClimbButtons(){
@@ -94,5 +97,40 @@ public class RobotWizards extends SimpleRobot {
     
     public void test() {
         SmartDashboard.putNumber("Test Axis", joystick3.getY());
+    }
+    
+    private double limitRotation(double axis){
+        if(axis > ROTATION_CAP){
+            axis = ROTATION_CAP;
+        }
+        else if(axis > -ROTATION_CAP){
+            axis = -ROTATION_CAP;
+        }
+        return axis;
+    }
+    
+    private boolean canRotate(double axis){
+        if(axis > 0 && !digitalForwards.get()){
+            return true;
+        }
+        else if(axis < 0 && !digitalBackwards.get()){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    
+    private void updateDashboardRotation(double yAxis){
+        if(yAxis > 0){
+            SmartDashboard.putString(ROTATION_KEY, "Backwards");
+        }
+        else if(yAxis < 0){
+            SmartDashboard.putString(ROTATION_KEY, "Forwards");
+        }
+        else{
+            SmartDashboard.putString(ROTATION_KEY, "Stopped");
+        }
+        SmartDashboard.putNumber("Rotation:", joystick3.getY());
     }
 }

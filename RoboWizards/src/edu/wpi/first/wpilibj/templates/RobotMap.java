@@ -10,6 +10,8 @@ package edu.wpi.first.wpilibj.templates;
  */
 public class RobotMap {
     
+    public static final int DIGITAL_INPUT_FORWARDS = 1;
+    public static final int DIGITAL_INPUT_BACKWARDS = 2;
     public static final int RAISE_ARM_JAGUAR = 5;
     public static final int ROTATE_ARM_JAGUAR = 4;
     public static final int MOTOR_ONE = 1;
