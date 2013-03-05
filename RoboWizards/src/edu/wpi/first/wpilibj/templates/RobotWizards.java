@@ -20,7 +20,6 @@ public class RobotWizards extends SimpleRobot {
     
     public static final String ROTATION_KEY = "Rotate State: ";
     public static final String LIFTING_KEY = "Lift State: ";
-    public static final double ROTATION_CAP = 0.7;
     
     private final WizardArmController armController;
     private final RobotDrive robotDrive;
@@ -65,13 +64,13 @@ public class RobotWizards extends SimpleRobot {
     
     private void checkRotateJoystick(){
         double yAxis = joystick3.getY();
-        yAxis = limitRotation(yAxis);
         boolean allowRotation = canRotate(yAxis);
         if(allowRotation){
             armController.rotateArms(yAxis * -1);
             updateDashboardRotation(yAxis);
         }
         else{
+            armController.stopArmRotation();
             SmartDashboard.putString(ROTATION_KEY, "Stopped by digital inputs");
         }
     }
@@ -97,16 +96,6 @@ public class RobotWizards extends SimpleRobot {
     
     public void test() {
         SmartDashboard.putNumber("Test Axis", joystick3.getY());
-    }
-    
-    private double limitRotation(double axis){
-        if(axis > ROTATION_CAP){
-            axis = ROTATION_CAP;
-        }
-        else if(axis > -ROTATION_CAP){
-            axis = -ROTATION_CAP;
-        }
-        return axis;
     }
     
     private boolean canRotate(double axis){
