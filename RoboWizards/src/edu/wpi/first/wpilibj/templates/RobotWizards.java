@@ -65,7 +65,7 @@ public class RobotWizards extends SimpleRobot {
     }
     
     private void checkRotateJoystick(){
-        double yAxis = joystick3.getY();
+        double yAxis = joystick4.getY();
         boolean allowRotation = canRotate(yAxis);
         if(allowRotation){
             armController.rotateArms(yAxis * -1);
@@ -78,11 +78,11 @@ public class RobotWizards extends SimpleRobot {
     }
     
     private void checkClimbButtons(){
-        if(joystick4.getY() < 0){
+        if(joystick3.getY() < 0){
             armController.lowerClimbArms();
             SmartDashboard.putString(LIFTING_KEY, "Lifting");
         }
-        else if(joystick4.getY() > 0){
+        else if(joystick3.getY() > 0){
             armController.raiseClimbArms();
             SmartDashboard.putString(LIFTING_KEY, "Lowering");
         }
