@@ -26,6 +26,7 @@ public class RobotWizards extends SimpleRobot {
     private final Joystick joystick1;
     private final Joystick joystick2;
     private final Joystick joystick3;
+    private final Joystick joystick4;
     private final DigitalInput digitalForwards;
     private final DigitalInput digitalBackwards;
 
@@ -36,6 +37,7 @@ public class RobotWizards extends SimpleRobot {
         this.joystick1 = new Joystick(1);
         this.joystick2 = new Joystick(2);
         this.joystick3 = new Joystick(3);
+        this.joystick4 = new Joystick(4);
         this.digitalForwards = new DigitalInput(RobotMap.DIGITAL_INPUT_FORWARDS);
         this.digitalBackwards = new DigitalInput(RobotMap.DIGITAL_INPUT_BACKWARDS);
     } 
@@ -76,11 +78,11 @@ public class RobotWizards extends SimpleRobot {
     }
     
     private void checkClimbButtons(){
-        if(joystick3.getRawButton(UIMap.RAISE_ARM_BUTTON)){
+        if(joystick4.getY() < 0){
             armController.lowerClimbArms();
             SmartDashboard.putString(LIFTING_KEY, "Lifting");
         }
-        else if(joystick3.getRawButton(UIMap.LOWER_ARM_BUTTON)){
+        else if(joystick4.getY() > 0){
             armController.raiseClimbArms();
             SmartDashboard.putString(LIFTING_KEY, "Lowering");
         }
