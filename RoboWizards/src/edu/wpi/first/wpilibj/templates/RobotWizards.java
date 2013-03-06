@@ -65,8 +65,8 @@ public class RobotWizards extends SimpleRobot {
     }
     
     private void checkRotateJoystick(){
-        double yAxis = joystick4.getY();
-        boolean allowRotation = canRotate(yAxis);
+        final double yAxis = joystick4.getY();
+        final boolean allowRotation = canRotate(yAxis);
         if(allowRotation){
             armController.rotateArms(yAxis * -1);
             updateDashboardRotation(yAxis);
@@ -78,12 +78,12 @@ public class RobotWizards extends SimpleRobot {
     }
     
     private void checkClimbButtons(){
-        if(joystick3.getY() < 0){
-            armController.lowerClimbArms();
+        if(joystick3.getRawButton(1)){
+            armController.raiseClimbArms();
             SmartDashboard.putString(LIFTING_KEY, "Lifting");
         }
-        else if(joystick3.getY() > 0){
-            armController.raiseClimbArms();
+        else if(joystick3.getRawButton(2)){
+            armController.lowerClimbArms();
             SmartDashboard.putString(LIFTING_KEY, "Lowering");
         }
         else{
@@ -91,6 +91,15 @@ public class RobotWizards extends SimpleRobot {
             SmartDashboard.putString(LIFTING_KEY, "Stopped");
         }
     }
+    
+    private void checkClimbButtonsTest(){
+        final double yAxis = joystick3.getY();
+        if(yAxis > -UIMap.JOYSTICK_DEAD_ZONE){
+            armController.raiseClimbArms();
+            SmartDashboard.putString(LIFTING_KEY, "Lifting");
+        }
+        //else if(yAxis <  )
+    } 
     
     private void checkAutoClimbButtons(){
         //To-Do
@@ -101,11 +110,21 @@ public class RobotWizards extends SimpleRobot {
     }
     
     private boolean canRotate(double axis){
-        if(axis > 0 && !digitalForwards.get()){
-            return true;
+        if(axis > 0){
+            if(!digitalForwards.get()){
+                return true;
+            }
+            else{
+                return false;
+            }
         }
-        else if(axis < 0 && !digitalBackwards.get()){
-            return true;
+        else if(axis < 0){
+            if(!digitalBackwards.get()){
+                return true;
+            }
+            else{
+                return false;
+            }
         }
         else{
             return false;
