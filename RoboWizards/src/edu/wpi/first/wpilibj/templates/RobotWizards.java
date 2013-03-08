@@ -1,4 +1,4 @@
-/*----------------------------------------------------------------------------*/
+ /*----------------------------------------------------------------------------*/
 /* Copyright (c) FIRST 2008. All Rights Reserved.                             */
 /* Open Source Software - may be modified and shared by FRC teams. The code   */
 /* must be accompanied by the FIRST BSD license file in the root directory of */
@@ -29,6 +29,7 @@ public class RobotWizards extends SimpleRobot {
     private final Joystick joystick4;
     private final DigitalInput digitalForwards;
     private final DigitalInput digitalBackwards;
+    private final DigitalInput digitalLift;
 
     public RobotWizards() {
         this.armController = new WizardArmController(RobotMap.RAISE_ARM_JAGUAR, 
@@ -40,20 +41,15 @@ public class RobotWizards extends SimpleRobot {
         this.joystick4 = new Joystick(4);
         this.digitalForwards = new DigitalInput(RobotMap.DIGITAL_INPUT_FORWARDS);
         this.digitalBackwards = new DigitalInput(RobotMap.DIGITAL_INPUT_BACKWARDS);
+        this.digitalLift = new DigitalInput(RobotMap.DIGITAL_INPUT_LIFT);
     } 
     
     public void autonomous() {
-        Watchdog.getInstance().setEnabled(false);
         
-        //Autonomous cod here
-        
-        Watchdog.getInstance().setEnabled(true);
-        Watchdog.getInstance().feed();
     }
 
     public void operatorControl() {
         while(isOperatorControl() && isEnabled()){
-            Watchdog.getInstance().setEnabled(true);
             Watchdog.getInstance().feed();
             robotDrive.tankDrive(-joystick1.getY(), -joystick2.getY());
             checkRotateJoystick();
@@ -79,8 +75,14 @@ public class RobotWizards extends SimpleRobot {
     
     private void checkClimbButtons(){
         if(joystick3.getRawButton(1)){
-            armController.raiseClimbArms();
-            SmartDashboard.putString(LIFTING_KEY, "Lifting");
+            if(canLift()){
+                armController.raiseClimbArms();
+                SmartDashboard.putString(LIFTING_KEY, "Lifting");
+            }
+            else{
+                armController.stopClimbArms();
+                SmartDashboard.putString(LIFTING_KEY, "stopped by digital inputs");
+            }
         }
         else if(joystick3.getRawButton(2)){
             armController.lowerClimbArms();
@@ -128,6 +130,15 @@ public class RobotWizards extends SimpleRobot {
         }
         else{
             return false;
+        }
+    }
+    
+    public boolean canLift(){
+        if(digitalLift.get()){
+            return false;
+        }
+        else{
+            return true;
         }
     }
     
