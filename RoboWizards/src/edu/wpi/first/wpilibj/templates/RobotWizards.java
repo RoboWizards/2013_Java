@@ -111,22 +111,12 @@ public class RobotWizards extends SimpleRobot {
         SmartDashboard.putNumber("Test Axis", joystick3.getY());
     }
     
-    private boolean canRotate(double axis){
-        if(axis > 0){
-            if(!digitalForwards.get()){
-                return true;
-            }
-            else{
-                return false;
-            }
+    private boolean canRotate(double axis){ 
+        if(axis >= 0 ){
+            return !digitalForwards.get(); 
         }
-        else if(axis < 0){
-            if(!digitalBackwards.get()){
-                return true;
-            }
-            else{
-                return false;
-            }
+        else if(axis <= 0){
+            return !digitalBackwards.get();
         }
         else{
             return false;
