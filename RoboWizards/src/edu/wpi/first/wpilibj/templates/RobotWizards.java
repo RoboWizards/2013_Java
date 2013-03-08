@@ -134,12 +134,7 @@ public class RobotWizards extends SimpleRobot {
     }
     
     public boolean canLift(){
-        if(digitalLift.get()){
-            return false;
-        }
-        else{
-            return true;
-        }
+        return digitalLift.get();
     }
     
     private void updateDashboardRotation(double yAxis){
