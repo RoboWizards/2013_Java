@@ -27,7 +27,7 @@ public class RobotWizards extends SimpleRobot {
     private final Joystick joystick2;
     private final Joystick joystick3;
     private final Joystick joystick4;
-    private final DigitalInput digitalForwards;
+    private final DigitalInput digitalForwards; 
     private final DigitalInput digitalBackwards;
     private final DigitalInput digitalLift;
 
@@ -35,7 +35,7 @@ public class RobotWizards extends SimpleRobot {
         this.armController = new WizardArmController(RobotMap.RAISE_ARM_JAGUAR, 
                 RobotMap.ROTATE_ARM_JAGUAR);
         this.robotDrive = new RobotDrive(RobotMap.MOTOR_ONE, RobotMap.MOTOR_TWO);
-        this.joystick1 = new Joystick(1);
+        this.joystick1 = new Joystick(1); 
         this.joystick2 = new Joystick(2);
         this.joystick3 = new Joystick(3);
         this.joystick4 = new Joystick(4);
@@ -61,7 +61,7 @@ public class RobotWizards extends SimpleRobot {
     }
     
     private void checkRotateJoystick(){
-        final double yAxis = joystick4.getY();
+        final double yAxis = joystick3.getY();
         final boolean allowRotation = canRotate(yAxis);
         if(allowRotation){
             armController.rotateArms(yAxis * -1);
@@ -74,7 +74,7 @@ public class RobotWizards extends SimpleRobot {
     }
     
     private void checkClimbButtons(){
-        if(joystick3.getRawButton(1)){
+        if(joystick4.getRawButton(1)){
             if(canLift()){
                 armController.raiseClimbArms();
                 SmartDashboard.putString(LIFTING_KEY, "Lifting");
@@ -84,7 +84,7 @@ public class RobotWizards extends SimpleRobot {
                 SmartDashboard.putString(LIFTING_KEY, "stopped by digital inputs");
             }
         }
-        else if(joystick3.getRawButton(2)){
+        else if(joystick4.getRawButton(2)){
             armController.lowerClimbArms();
             SmartDashboard.putString(LIFTING_KEY, "Lowering");
         }
@@ -93,15 +93,6 @@ public class RobotWizards extends SimpleRobot {
             SmartDashboard.putString(LIFTING_KEY, "Stopped");
         }
     }
-    
-    private void checkClimbButtonsTest(){
-        final double yAxis = joystick3.getY();
-        if(yAxis > -UIMap.JOYSTICK_DEAD_ZONE){
-            armController.raiseClimbArms();
-            SmartDashboard.putString(LIFTING_KEY, "Lifting");
-        }
-        //else if(yAxis <  )
-    } 
     
     private void checkAutoClimbButtons(){
         //To-Do

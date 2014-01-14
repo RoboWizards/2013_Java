@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.Jaguar;
 public class WizardArmController {
     
     private final double ROTATION_SPEED = .6;
-    private final double LIFT_SPEED_UP = .6;
+    private final double LIFT_SPEED_UP = .8;
     private final double LIFT_SPEED_DOWN = 1.0;
     
     private final Jaguar armLiftController;
